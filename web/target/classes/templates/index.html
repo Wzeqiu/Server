@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/layer/2.3/layer.js"></script>
+    <title>详情</title>
+</head>
+
+<body>
+<div id="index">
+
+    <div>{{data}}</div>
+
+</div>
+</body>
+<script type="text/javascript">
+    const indexVM = new Vue({
+        el: '#index',
+        data: {
+            userName: '',
+            password: '',
+            rememberMe: false
+        },
+        computed : {},
+        created : function() {
+        },
+        userInfo: function () {
+            const that = this;
+            that.$http.get('/user/userInfo').then(function (res) {
+                that.data = res.body.data
+            });
+        },
+    });
+</script>
+</html>

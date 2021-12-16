@@ -1,5 +1,6 @@
 package com.server.config;
 
+import com.server.user.vo.UserAccountDetails;
 import org.attoparser.util.TextUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;

@@ -4,3 +4,15 @@ server:
     session:
       cookie:
         name: sessionid
+      timeout: 600
+spring:
+  redis:
+    database: 15
+    timeout: 3000
+    password: runscore001
+    # 单节点模式
+    host: 127.0.0.1
+    port: 6379
+  session:
+    store-type: redis
+    timeout: 7200s

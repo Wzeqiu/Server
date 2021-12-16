@@ -1,5 +1,6 @@
 package com.server.config;
 
+import com.server.user.vo.UserAccountDetails;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +28,7 @@ public class WebAuthenticationProvider implements AuthenticationProvider {
             throw new AuthenticationServiceException("密码错误");
         }
         UserAccountDetails userAccountDetails = new UserAccountDetails();
-        return new UsernamePasswordAuthenticationToken(userName, pwd, userAccountDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userAccountDetails, userAccountDetails.getPassword(), userAccountDetails.getAuthorities());
     }
 
     @Override

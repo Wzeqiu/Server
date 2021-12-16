@@ -1,19 +1,24 @@
 package com.server.controller.user.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.server.common.vo.Result;
 import com.server.user.vo.UserAccountDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-@RestController(value = "/user")
+@Controller
+@RequestMapping("/user")
 public class UserController {
 
 
-    @RequestMapping(value = "userInfo", method = RequestMethod.GET)
-    public UserAccountDetails getUserInfo() {
+    @GetMapping(value = "/userInfo")
+    @ResponseBody
+    public Result getUserInfo() {
         UserAccountDetails user = (UserAccountDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user;
+        return Result.success().setData(user);
     }
 
 }

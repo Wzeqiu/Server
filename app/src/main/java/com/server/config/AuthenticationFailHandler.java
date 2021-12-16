@@ -15,16 +15,15 @@ import java.io.PrintWriter;
 
 @Component
 public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHandler {
-
-	@Override
-	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException e) throws IOException, ServletException {
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		PrintWriter out = response.getWriter();
-		out.println(JSONObject.toJSONString(Result.fail(500, e.getMessage())));
-		out.flush();
-		out.close();
-	}
+    @Override
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                        AuthenticationException e) throws IOException, ServletException {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        out.println(JSONObject.toJSONString(Result.fail(500, e.getMessage())));
+        out.flush();
+        out.close();
+    }
 
 }

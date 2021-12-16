@@ -6,6 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="app" />
+        <module name="web" />
         <module name="api" />
       </profile>
     </annotationProcessing>
@@ -14,6 +16,7 @@
       <module name="app" target="8" />
       <module name="Server" target="8" />
       <module name="web" target="8" />
+      <module name="web_module" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -22,6 +25,7 @@
       <module name="api" options="-parameters" />
       <module name="app" options="-parameters" />
       <module name="web" options="-parameters" />
+      <module name="web_module" options="-parameters" />
     </option>
   </component>
 </project>

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -25,15 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
-    private RememberMeUserDetailsService rememberMeUserDetailsService;
+    private SessionExpiredStrategy sessionExpiredStrategy;
+
 
     @Autowired
     private LogoutHandler logoutHandler;
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -50,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessHandler(logoutHandler)
+                .clearAuthentication(true)      //清除认证信息
                 .permitAll()                    //登出路径放行 /logout。这是框架自带的登出请求
                 .and()
                 .csrf().disable()//禁止匿名  关闭csrf
@@ -59,11 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint);//身份认证验证失败配置
 
-        http.rememberMe()
-                .rememberMeParameter("rememberMe")
-//                .tokenRepository(persistentTokenRepository())	//持久
-                .tokenValiditySeconds(3600 * 24 * 7)
-                .userDetailsService(rememberMeUserDetailsService); //用来加载用户认证信息的
+        http.sessionManagement()
+                .maximumSessions(1)
+                .expiredSessionStrategy(sessionExpiredStrategy);
+
 
     }
 
@@ -72,5 +67,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(webAuthenticationProvider);
     }
+
 
 }
